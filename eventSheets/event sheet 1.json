@@ -12,6 +12,26 @@
 			"sid": 907639338580905
 		},
 		{
+			"eventType": "variable",
+			"name": "Zoom",
+			"type": "number",
+			"initialValue": "6",
+			"comment": "Camera Zoom , how close or far you are seeing the Map",
+			"isStatic": false,
+			"isConstant": false,
+			"sid": 227195415237280
+		},
+		{
+			"eventType": "variable",
+			"name": "RNG",
+			"type": "number",
+			"initialValue": "0",
+			"comment": "",
+			"isStatic": false,
+			"isConstant": false,
+			"sid": 871871616634757
+		},
+		{
 			"eventType": "comment",
 			"text": "When the game starts, the player is set in Idle AND the map is zoomed in"
 		},
@@ -29,17 +49,10 @@
 					"id": "set-animation",
 					"objectClass": "Player",
 					"sid": 438564944732476,
+					"disabled": true,
 					"parameters": {
 						"animation": "\"Idle\"",
 						"from": "beginning"
-					}
-				},
-				{
-					"id": "set-layout-scale",
-					"objectClass": "System",
-					"sid": 145037363758367,
-					"parameters": {
-						"scale": "6.0"
 					}
 				},
 				{
@@ -49,15 +62,33 @@
 					"parameters": {
 						"state": "mirrored"
 					}
+				},
+				{
+					"id": "set-mirrored",
+					"objectClass": "Zombie",
+					"sid": 822466629128634,
+					"parameters": {
+						"state": "mirrored"
+					}
+				},
+				{
+					"id": "set-mirrored",
+					"objectClass": "Demon",
+					"sid": 678191611708221,
+					"parameters": {
+						"state": "mirrored"
+					}
+				},
+				{
+					"id": "set-opacity",
+					"objectClass": "NextMap",
+					"sid": 445285426285706,
+					"parameters": {
+						"opacity": "0"
+					}
 				}
 			],
 			"sid": 689684959068778
-		},
-		{
-			"eventType": "block",
-			"conditions": [],
-			"actions": [],
-			"sid": 786930983578331
 		},
 		{
 			"eventType": "group",
@@ -119,9 +150,77 @@
 								"x": "lerp(Self.X, Player.X, 0.03)",
 								"y": "lerp(Self.Y, Player.Y, 0.03)"
 							}
+						},
+						{
+							"id": "set-layout-scale",
+							"objectClass": "System",
+							"sid": 196507510271205,
+							"parameters": {
+								"scale": "Zoom"
+							}
 						}
 					],
 					"sid": 684605524524397
+				},
+				{
+					"eventType": "group",
+					"disabled": false,
+					"title": "Zoom",
+					"description": "Zooming in and out with the mouse scroll wheel",
+					"isActiveOnStart": true,
+					"children": [
+						{
+							"eventType": "block",
+							"conditions": [
+								{
+									"id": "on-mouse-wheel",
+									"objectClass": "Mouse",
+									"sid": 290806081796462,
+									"parameters": {
+										"direction": "up"
+									}
+								}
+							],
+							"actions": [
+								{
+									"id": "add-to-eventvar",
+									"objectClass": "System",
+									"sid": 144949041022274,
+									"parameters": {
+										"variable": "Zoom",
+										"value": "0.5"
+									}
+								}
+							],
+							"sid": 712100280783951
+						},
+						{
+							"eventType": "block",
+							"conditions": [
+								{
+									"id": "on-mouse-wheel",
+									"objectClass": "Mouse",
+									"sid": 578499184202576,
+									"parameters": {
+										"direction": "down"
+									}
+								}
+							],
+							"actions": [
+								{
+									"id": "subtract-from-eventvar",
+									"objectClass": "System",
+									"sid": 591413690842920,
+									"parameters": {
+										"variable": "Zoom",
+										"value": "0.5"
+									}
+								}
+							],
+							"sid": 191624575944029
+						}
+					],
+					"sid": 685499978305847
 				}
 			],
 			"sid": 163648546591466
@@ -362,6 +461,121 @@
 				}
 			],
 			"sid": 816194842915994
+		},
+		{
+			"eventType": "group",
+			"disabled": false,
+			"title": "Randomly Spawn Map",
+			"description": "",
+			"isActiveOnStart": true,
+			"children": [
+				{
+					"eventType": "block",
+					"conditions": [
+						{
+							"id": "on-collision-with-another-object",
+							"objectClass": "Player",
+							"sid": 201257645242875,
+							"parameters": {
+								"object": "NextMap"
+							}
+						}
+					],
+					"actions": [
+						{
+							"id": "set-eventvar-value",
+							"objectClass": "System",
+							"sid": 309113843466511,
+							"parameters": {
+								"variable": "RNG",
+								"value": "choose(1,2,3)"
+							}
+						}
+					],
+					"sid": 279309673799779,
+					"children": [
+						{
+							"eventType": "block",
+							"conditions": [
+								{
+									"id": "compare-eventvar",
+									"objectClass": "System",
+									"sid": 830816423660864,
+									"parameters": {
+										"variable": "RNG",
+										"comparison": 0,
+										"value": "1"
+									}
+								}
+							],
+							"actions": [
+								{
+									"id": "go-to-layout",
+									"objectClass": "System",
+									"sid": 907299822534464,
+									"parameters": {
+										"layout": "Map A"
+									}
+								}
+							],
+							"sid": 211080693920962
+						},
+						{
+							"eventType": "block",
+							"conditions": [
+								{
+									"id": "compare-eventvar",
+									"objectClass": "System",
+									"sid": 784028800303094,
+									"parameters": {
+										"variable": "RNG",
+										"comparison": 0,
+										"value": "2"
+									}
+								}
+							],
+							"actions": [
+								{
+									"id": "go-to-layout",
+									"objectClass": "System",
+									"sid": 424472592461197,
+									"parameters": {
+										"layout": "Map B"
+									}
+								}
+							],
+							"sid": 606832870718975
+						},
+						{
+							"eventType": "block",
+							"conditions": [
+								{
+									"id": "compare-eventvar",
+									"objectClass": "System",
+									"sid": 789549727309822,
+									"parameters": {
+										"variable": "RNG",
+										"comparison": 0,
+										"value": "3"
+									}
+								}
+							],
+							"actions": [
+								{
+									"id": "go-to-layout",
+									"objectClass": "System",
+									"sid": 194116484675830,
+									"parameters": {
+										"layout": "Map C"
+									}
+								}
+							],
+							"sid": 840242598230210
+						}
+					]
+				}
+			],
+			"sid": 497988964719186
 		}
 	],
 	"sid": 476353161329230

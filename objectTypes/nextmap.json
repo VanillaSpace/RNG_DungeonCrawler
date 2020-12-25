@@ -1,0 +1,49 @@
+{
+	"name": "NextMap",
+	"plugin-id": "Sprite",
+	"sid": 791503556147966,
+	"isGlobal": false,
+	"instanceVariables": [],
+	"behaviorTypes": [],
+	"effectTypes": [],
+	"animations": {
+		"items": [
+			{
+				"frames": [
+					{
+						"width": 241,
+						"height": 240,
+						"originX": 0.5062240663900415,
+						"originY": 0.525,
+						"originalSource": "",
+						"exportFormat": "png",
+						"exportQuality": 0.8,
+						"imageSpriteId": 7064685,
+						"collisionPoly": {
+							"points": [
+								0,
+								0.004166666666666667,
+								1,
+								0.004166666666666667,
+								1,
+								1,
+								0,
+								1
+							]
+						},
+						"useCollisionPoly": true,
+						"duration": 1
+					}
+				],
+				"sid": 191864082747606,
+				"name": "Animation 1",
+				"isLooping": false,
+				"isPingPong": false,
+				"repeatCount": 1,
+				"repeatTo": 0,
+				"speed": 5
+			}
+		],
+		"subfolders": []
+	}
+}

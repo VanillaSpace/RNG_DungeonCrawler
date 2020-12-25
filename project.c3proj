@@ -39,6 +39,14 @@
 			"bundled": false
 		},
 		{
+			"type": "plugin",
+			"id": "Mouse",
+			"name": "Mouse",
+			"author": "Scirra",
+			"version": "r225",
+			"bundled": false
+		},
+		{
 			"type": "behavior",
 			"id": "solid",
 			"name": "Solid",
@@ -81,7 +89,12 @@
 			"Keyboard",
 			"Orc",
 			"Spike",
-			"Text"
+			"Text",
+			"Zombie",
+			"Mouse",
+			"NextMap",
+			"Mimic",
+			"Demon"
 		],
 		"subfolders": []
 	},
@@ -93,7 +106,10 @@
 	},
 	"layouts": {
 		"items": [
-			"Start Map"
+			"Start Map",
+			"Map A",
+			"Map B",
+			"Map C"
 		],
 		"subfolders": []
 	},
