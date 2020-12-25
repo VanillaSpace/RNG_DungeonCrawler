@@ -6,7 +6,7 @@
 			"name": "HP",
 			"type": "number",
 			"initialValue": "3",
-			"comment": "",
+			"comment": "Player has 3 lives",
 			"isStatic": false,
 			"isConstant": false,
 			"sid": 907639338580905
@@ -26,7 +26,7 @@
 			"name": "RNG",
 			"type": "number",
 			"initialValue": "0",
-			"comment": "",
+			"comment": "This will randomly select which Map the player will be sent to",
 			"isStatic": false,
 			"isConstant": false,
 			"sid": 871871616634757
@@ -89,141 +89,6 @@
 				}
 			],
 			"sid": 689684959068778
-		},
-		{
-			"eventType": "group",
-			"disabled": false,
-			"title": "HUD",
-			"description": "",
-			"isActiveOnStart": true,
-			"children": [
-				{
-					"eventType": "block",
-					"conditions": [
-						{
-							"id": "every-tick",
-							"objectClass": "System",
-							"sid": 577288800785985
-						}
-					],
-					"actions": [
-						{
-							"id": "set-text",
-							"objectClass": "Text",
-							"sid": 373028498739223,
-							"parameters": {
-								"text": "\"HP: \" & HP"
-							}
-						}
-					],
-					"sid": 526067419590126
-				}
-			],
-			"sid": 713094469385259
-		},
-		{
-			"eventType": "group",
-			"disabled": false,
-			"title": "Camera",
-			"description": "",
-			"isActiveOnStart": true,
-			"children": [
-				{
-					"eventType": "comment",
-					"text": "Camera Follows the character"
-				},
-				{
-					"eventType": "block",
-					"conditions": [
-						{
-							"id": "every-tick",
-							"objectClass": "System",
-							"sid": 686740740474124
-						}
-					],
-					"actions": [
-						{
-							"id": "set-position",
-							"objectClass": "Camera",
-							"sid": 519530503635345,
-							"parameters": {
-								"x": "lerp(Self.X, Player.X, 0.03)",
-								"y": "lerp(Self.Y, Player.Y, 0.03)"
-							}
-						},
-						{
-							"id": "set-layout-scale",
-							"objectClass": "System",
-							"sid": 196507510271205,
-							"parameters": {
-								"scale": "Zoom"
-							}
-						}
-					],
-					"sid": 684605524524397
-				},
-				{
-					"eventType": "group",
-					"disabled": false,
-					"title": "Zoom",
-					"description": "Zooming in and out with the mouse scroll wheel",
-					"isActiveOnStart": true,
-					"children": [
-						{
-							"eventType": "block",
-							"conditions": [
-								{
-									"id": "on-mouse-wheel",
-									"objectClass": "Mouse",
-									"sid": 290806081796462,
-									"parameters": {
-										"direction": "up"
-									}
-								}
-							],
-							"actions": [
-								{
-									"id": "add-to-eventvar",
-									"objectClass": "System",
-									"sid": 144949041022274,
-									"parameters": {
-										"variable": "Zoom",
-										"value": "0.5"
-									}
-								}
-							],
-							"sid": 712100280783951
-						},
-						{
-							"eventType": "block",
-							"conditions": [
-								{
-									"id": "on-mouse-wheel",
-									"objectClass": "Mouse",
-									"sid": 578499184202576,
-									"parameters": {
-										"direction": "down"
-									}
-								}
-							],
-							"actions": [
-								{
-									"id": "subtract-from-eventvar",
-									"objectClass": "System",
-									"sid": 591413690842920,
-									"parameters": {
-										"variable": "Zoom",
-										"value": "0.5"
-									}
-								}
-							],
-							"sid": 191624575944029
-						}
-					],
-					"sid": 685499978305847
-				}
-			],
-			"sid": 163648546591466
 		},
 		{
 			"eventType": "group",
@@ -400,75 +265,14 @@
 		{
 			"eventType": "group",
 			"disabled": false,
-			"title": "Traps",
+			"title": "Randomly Spawn Map",
 			"description": "",
 			"isActiveOnStart": true,
 			"children": [
 				{
 					"eventType": "comment",
-					"text": "When the player touches the Spikes while the Spikes are appearing (Frame 3 and 4) the player takes 1 Dmg"
+					"text": "When the player goes to a Ladder, it will  trigger the RNG and sends the player to a  map based on the random number generator"
 				},
-				{
-					"eventType": "block",
-					"conditions": [
-						{
-							"id": "on-collision-with-another-object",
-							"objectClass": "Player",
-							"sid": 737161692529647,
-							"parameters": {
-								"object": "Spike"
-							}
-						},
-						{
-							"id": "compare-animation-frame",
-							"objectClass": "Spike",
-							"sid": 427871533194443,
-							"parameters": {
-								"comparison": 5,
-								"number": "2"
-							}
-						}
-					],
-					"actions": [
-						{
-							"id": "subtract-from-eventvar",
-							"objectClass": "System",
-							"sid": 956658744618272,
-							"parameters": {
-								"variable": "HP",
-								"value": "1"
-							}
-						},
-						{
-							"id": "set-animation",
-							"objectClass": "Player",
-							"sid": 998428128596151,
-							"parameters": {
-								"animation": "\"Hit\"",
-								"from": "current-frame"
-							}
-						},
-						{
-							"id": "set-font-color",
-							"objectClass": "Text",
-							"sid": 190985418592591,
-							"parameters": {
-								"color": "rgbEx(248, 13, 13)"
-							}
-						}
-					],
-					"sid": 650008603072756
-				}
-			],
-			"sid": 816194842915994
-		},
-		{
-			"eventType": "group",
-			"disabled": false,
-			"title": "Randomly Spawn Map",
-			"description": "",
-			"isActiveOnStart": true,
-			"children": [
 				{
 					"eventType": "block",
 					"conditions": [
@@ -576,6 +380,206 @@
 				}
 			],
 			"sid": 497988964719186
+		},
+		{
+			"eventType": "group",
+			"disabled": false,
+			"title": "HUD",
+			"description": "",
+			"isActiveOnStart": true,
+			"children": [
+				{
+					"eventType": "block",
+					"conditions": [
+						{
+							"id": "every-tick",
+							"objectClass": "System",
+							"sid": 776248424597901
+						}
+					],
+					"actions": [
+						{
+							"id": "set-text",
+							"objectClass": "Text",
+							"sid": 317396196595920,
+							"parameters": {
+								"text": "\"HP: \" & HP"
+							}
+						}
+					],
+					"sid": 760722769839850
+				},
+				{
+					"eventType": "group",
+					"disabled": false,
+					"title": "Camera",
+					"description": "",
+					"isActiveOnStart": true,
+					"children": [
+						{
+							"eventType": "comment",
+							"text": "Camera Follows the character"
+						},
+						{
+							"eventType": "block",
+							"conditions": [
+								{
+									"id": "every-tick",
+									"objectClass": "System",
+									"sid": 682903409076592
+								}
+							],
+							"actions": [
+								{
+									"id": "set-position",
+									"objectClass": "Camera",
+									"sid": 103214489377742,
+									"parameters": {
+										"x": "lerp(Self.X, Player.X, 0.03)",
+										"y": "lerp(Self.Y, Player.Y, 0.03)"
+									}
+								},
+								{
+									"id": "set-layout-scale",
+									"objectClass": "System",
+									"sid": 155515906140517,
+									"parameters": {
+										"scale": "Zoom"
+									}
+								}
+							],
+							"sid": 503731900489115
+						},
+						{
+							"eventType": "group",
+							"disabled": false,
+							"title": "Zoom",
+							"description": "Zooming in and out with the mouse scroll wheel",
+							"isActiveOnStart": true,
+							"children": [
+								{
+									"eventType": "block",
+									"conditions": [
+										{
+											"id": "on-mouse-wheel",
+											"objectClass": "Mouse",
+											"sid": 161014198110572,
+											"parameters": {
+												"direction": "up"
+											}
+										}
+									],
+									"actions": [
+										{
+											"id": "add-to-eventvar",
+											"objectClass": "System",
+											"sid": 904240020696472,
+											"parameters": {
+												"variable": "Zoom",
+												"value": "0.5"
+											}
+										}
+									],
+									"sid": 769461924552994
+								},
+								{
+									"eventType": "block",
+									"conditions": [
+										{
+											"id": "on-mouse-wheel",
+											"objectClass": "Mouse",
+											"sid": 736302772568720,
+											"parameters": {
+												"direction": "down"
+											}
+										}
+									],
+									"actions": [
+										{
+											"id": "subtract-from-eventvar",
+											"objectClass": "System",
+											"sid": 696731347663418,
+											"parameters": {
+												"variable": "Zoom",
+												"value": "0.5"
+											}
+										}
+									],
+									"sid": 234142834253885
+								}
+							],
+							"sid": 705089642086645
+						}
+					],
+					"sid": 326015336330219
+				}
+			],
+			"sid": 280816802476522
+		},
+		{
+			"eventType": "group",
+			"disabled": false,
+			"title": "Traps",
+			"description": "",
+			"isActiveOnStart": true,
+			"children": [
+				{
+					"eventType": "comment",
+					"text": "When the player touches the Spikes while the Spikes are appearing (Frame 3 and 4) the player takes 1 Dmg"
+				},
+				{
+					"eventType": "block",
+					"conditions": [
+						{
+							"id": "on-collision-with-another-object",
+							"objectClass": "Player",
+							"sid": 640550576346745,
+							"parameters": {
+								"object": "Spike"
+							}
+						},
+						{
+							"id": "compare-animation-frame",
+							"objectClass": "Spike",
+							"sid": 886390972676985,
+							"parameters": {
+								"comparison": 5,
+								"number": "2"
+							}
+						}
+					],
+					"actions": [
+						{
+							"id": "subtract-from-eventvar",
+							"objectClass": "System",
+							"sid": 279475006214083,
+							"parameters": {
+								"variable": "HP",
+								"value": "1"
+							}
+						},
+						{
+							"id": "set-animation",
+							"objectClass": "Player",
+							"sid": 607020562748575,
+							"parameters": {
+								"animation": "\"Hit\"",
+								"from": "current-frame"
+							}
+						},
+						{
+							"id": "set-font-color",
+							"objectClass": "Text",
+							"sid": 235192326001362,
+							"parameters": {
+								"color": "rgbEx(248, 13, 13)"
+							}
+						}
+					],
+					"sid": 821184810195399
+				}
+			],
+			"sid": 927427607600759
 		}
 	],
 	"sid": 476353161329230
