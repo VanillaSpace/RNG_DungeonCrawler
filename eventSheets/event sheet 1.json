@@ -1,0 +1,368 @@
+{
+	"name": "Event sheet 1",
+	"events": [
+		{
+			"eventType": "variable",
+			"name": "HP",
+			"type": "number",
+			"initialValue": "3",
+			"comment": "",
+			"isStatic": false,
+			"isConstant": false,
+			"sid": 907639338580905
+		},
+		{
+			"eventType": "comment",
+			"text": "When the game starts, the player is set in Idle AND the map is zoomed in"
+		},
+		{
+			"eventType": "block",
+			"conditions": [
+				{
+					"id": "on-start-of-layout",
+					"objectClass": "System",
+					"sid": 938961784736213
+				}
+			],
+			"actions": [
+				{
+					"id": "set-animation",
+					"objectClass": "Player",
+					"sid": 438564944732476,
+					"parameters": {
+						"animation": "\"Idle\"",
+						"from": "beginning"
+					}
+				},
+				{
+					"id": "set-layout-scale",
+					"objectClass": "System",
+					"sid": 145037363758367,
+					"parameters": {
+						"scale": "6.0"
+					}
+				},
+				{
+					"id": "set-mirrored",
+					"objectClass": "Orc",
+					"sid": 747643348436298,
+					"parameters": {
+						"state": "mirrored"
+					}
+				}
+			],
+			"sid": 689684959068778
+		},
+		{
+			"eventType": "block",
+			"conditions": [],
+			"actions": [],
+			"sid": 786930983578331
+		},
+		{
+			"eventType": "group",
+			"disabled": false,
+			"title": "HUD",
+			"description": "",
+			"isActiveOnStart": true,
+			"children": [
+				{
+					"eventType": "block",
+					"conditions": [
+						{
+							"id": "every-tick",
+							"objectClass": "System",
+							"sid": 577288800785985
+						}
+					],
+					"actions": [
+						{
+							"id": "set-text",
+							"objectClass": "Text",
+							"sid": 373028498739223,
+							"parameters": {
+								"text": "\"HP: \" & HP"
+							}
+						}
+					],
+					"sid": 526067419590126
+				}
+			],
+			"sid": 713094469385259
+		},
+		{
+			"eventType": "group",
+			"disabled": false,
+			"title": "Camera",
+			"description": "",
+			"isActiveOnStart": true,
+			"children": [
+				{
+					"eventType": "comment",
+					"text": "Camera Follows the character"
+				},
+				{
+					"eventType": "block",
+					"conditions": [
+						{
+							"id": "every-tick",
+							"objectClass": "System",
+							"sid": 686740740474124
+						}
+					],
+					"actions": [
+						{
+							"id": "set-position",
+							"objectClass": "Camera",
+							"sid": 519530503635345,
+							"parameters": {
+								"x": "lerp(Self.X, Player.X, 0.03)",
+								"y": "lerp(Self.Y, Player.Y, 0.03)"
+							}
+						}
+					],
+					"sid": 684605524524397
+				}
+			],
+			"sid": 163648546591466
+		},
+		{
+			"eventType": "group",
+			"disabled": false,
+			"title": "Player Controls",
+			"description": "",
+			"isActiveOnStart": true,
+			"children": [
+				{
+					"eventType": "comment",
+					"text": "If the player goes to the LEFT, it mirror's the Sprite"
+				},
+				{
+					"eventType": "block",
+					"conditions": [
+						{
+							"id": "key-is-down",
+							"objectClass": "Keyboard",
+							"sid": 460489643180921,
+							"parameters": {
+								"key": 37
+							}
+						}
+					],
+					"actions": [
+						{
+							"id": "set-mirrored",
+							"objectClass": "Player",
+							"sid": 240072334173659,
+							"parameters": {
+								"state": "mirrored"
+							}
+						}
+					],
+					"sid": 340115969160025
+				},
+				{
+					"eventType": "block",
+					"conditions": [
+						{
+							"id": "key-is-down",
+							"objectClass": "Keyboard",
+							"sid": 783644342799979,
+							"parameters": {
+								"key": 39
+							}
+						}
+					],
+					"actions": [
+						{
+							"id": "set-mirrored",
+							"objectClass": "Player",
+							"sid": 503461775691454,
+							"parameters": {
+								"state": "not-mirrored"
+							}
+						}
+					],
+					"sid": 242892412223658
+				},
+				{
+					"eventType": "comment",
+					"text": "RUN Animation"
+				},
+				{
+					"eventType": "block",
+					"conditions": [
+						{
+							"id": "is-moving",
+							"objectClass": "Player",
+							"sid": 231391363719163,
+							"behaviorType": "8Direction"
+						}
+					],
+					"actions": [
+						{
+							"id": "set-animation",
+							"objectClass": "Player",
+							"sid": 582160248301020,
+							"parameters": {
+								"animation": "\"Run\"",
+								"from": "current-frame"
+							}
+						}
+					],
+					"sid": 706226684425441
+				},
+				{
+					"eventType": "comment",
+					"text": "Idle Animation"
+				},
+				{
+					"eventType": "block",
+					"conditions": [
+						{
+							"id": "is-moving",
+							"objectClass": "Player",
+							"sid": 692939288237639,
+							"behaviorType": "8Direction",
+							"isInverted": true
+						}
+					],
+					"actions": [
+						{
+							"id": "set-animation",
+							"objectClass": "Player",
+							"sid": 957185067541867,
+							"parameters": {
+								"animation": "\"Idle\"",
+								"from": "current-frame"
+							}
+						}
+					],
+					"sid": 832890665629010
+				},
+				{
+					"eventType": "block",
+					"conditions": [
+						{
+							"id": "compare-eventvar",
+							"objectClass": "System",
+							"sid": 499869170888743,
+							"parameters": {
+								"variable": "HP",
+								"comparison": 3,
+								"value": "0"
+							}
+						}
+					],
+					"actions": [
+						{
+							"id": "destroy",
+							"objectClass": "Player",
+							"sid": 958743749426976
+						}
+					],
+					"sid": 711469253697474,
+					"children": [
+						{
+							"eventType": "block",
+							"conditions": [
+								{
+									"id": "key-is-down",
+									"objectClass": "Keyboard",
+									"sid": 774430200592713,
+									"parameters": {
+										"key": 82
+									}
+								}
+							],
+							"actions": [
+								{
+									"type": "comment",
+									"text": "Press R will reset the game back to the beginning"
+								},
+								{
+									"id": "reset-global-variables",
+									"objectClass": "System",
+									"sid": 251310175562402
+								},
+								{
+									"id": "restart-layout",
+									"objectClass": "System",
+									"sid": 594725116325515
+								}
+							],
+							"sid": 426768402768001
+						}
+					]
+				}
+			],
+			"sid": 720804039859459
+		},
+		{
+			"eventType": "group",
+			"disabled": false,
+			"title": "Traps",
+			"description": "",
+			"isActiveOnStart": true,
+			"children": [
+				{
+					"eventType": "comment",
+					"text": "When the player touches the Spikes while the Spikes are appearing (Frame 3 and 4) the player takes 1 Dmg"
+				},
+				{
+					"eventType": "block",
+					"conditions": [
+						{
+							"id": "on-collision-with-another-object",
+							"objectClass": "Player",
+							"sid": 737161692529647,
+							"parameters": {
+								"object": "Spike"
+							}
+						},
+						{
+							"id": "compare-animation-frame",
+							"objectClass": "Spike",
+							"sid": 427871533194443,
+							"parameters": {
+								"comparison": 5,
+								"number": "2"
+							}
+						}
+					],
+					"actions": [
+						{
+							"id": "subtract-from-eventvar",
+							"objectClass": "System",
+							"sid": 956658744618272,
+							"parameters": {
+								"variable": "HP",
+								"value": "1"
+							}
+						},
+						{
+							"id": "set-animation",
+							"objectClass": "Player",
+							"sid": 998428128596151,
+							"parameters": {
+								"animation": "\"Hit\"",
+								"from": "current-frame"
+							}
+						},
+						{
+							"id": "set-font-color",
+							"objectClass": "Text",
+							"sid": 190985418592591,
+							"parameters": {
+								"color": "rgbEx(248, 13, 13)"
+							}
+						}
+					],
+					"sid": 650008603072756
+				}
+			],
+			"sid": 816194842915994
+		}
+	],
+	"sid": 476353161329230
+}
